@@ -14,7 +14,6 @@
   function isPlainObject(value) {
       return toString.call(value) === '[object Object]';
   }
-  //# sourceMappingURL=utils.js.map
 
   function encode(value) {
       return encodeURIComponent(value)
@@ -86,18 +85,17 @@
       }
       return url;
   }
-  //# sourceMappingURL=buildUrl.js.map
 
   function xhr(options) {
       return new Promise(function (resolve, reject) {
           var url = options.url, method = options.method, data = options.data, params = options.params, paramsSerializer = options.paramsSerializer;
           var request = new XMLHttpRequest();
           /*
-            * 这里使用我们的buildURL
-            * 大家可能注意到我们这里的 method 后面，添加了一个 ! ,那是因为在我们的
-            * AxioxRequestConfig 中，method 不是必须的参数，但这里是必须有的，所以我们在这里断言 method 肯定有值
-            * 在 ts 中可以在一个值后加 ! 来断言一个值不为空
-          */
+           * 这里使用我们的buildURL
+           * 大家可能注意到我们这里的 method 后面，添加了一个 ! ,那是因为在我们的
+           * AxioxRequestConfig 中，method 不是必须的参数，但这里是必须有的，所以我们在这里断言 method 肯定有值
+           * 在 ts 中可以在一个值后加 ! 来断言一个值不为空
+           */
           request.open(method, buildURL(url, params, paramsSerializer), true);
           request.send(data);
       });
