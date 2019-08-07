@@ -1,4 +1,4 @@
-import { isURLSearchParams } from './utils'
+import { isURLSearchParams, isPlainObject, isDate } from './utils'
 
 function encode(value: string): string {
   return encodeURIComponent(value)
@@ -47,6 +47,15 @@ export function buildURL(url: string, params?: any, paramsSerializer?: (params: 
 
       // 循环将 k v 处理成 ['a=1','b=2']，并放置于 part 容器中
       value.forEach((val: any) => {
+        // 这里需要对时间对象单独处理
+        if (isDate(val)) {
+          val = val.toISOString()
+
+          // 需要对对象json化处理
+        } else if (isPlainObject(val)) {
+          val = JSON.stringify(val)
+        }
+
         // 这里是 axios 会讲 k 和 v 通过 url 编码，并且将一些特殊字符编译回来
         part.push(`${encode(key)}=${val}`)
       })
@@ -63,6 +72,7 @@ export function buildURL(url: string, params?: any, paramsSerializer?: (params: 
       url = url.slice(0, index)
     }
 
+    // 拼接 ？或者 &
     url += (url.indexOf('?') === -1 ? '?' : '&') + resultURL
   }
 

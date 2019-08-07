@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>day 01</title>
+  <script src="../iny-request.js"></script>
+</head>
+<body>
+  <script>
+    // 为了节约篇幅，测试用例我就写在一行了
+    // 基本处理
+    inyRequest({ url: '/base/test', method: 'GET', params: { a: 1, b: 1, c: 2}}).then(res => {}).catch(err => {})
+    // 数组数据
+    inyRequest({ url: '/base/test', method: 'GET', params: { a: [1, 2, 3, 4]}}).then(res => {}).catch(err => {})
+    // URLSearchParams
+    inyRequest({ url: '/base/test', method: 'GET', params: new URLSearchParams('a=1&b=2&c=3')}).then(res => {}).catch(err => {})
+    // 自定义参数处理函数
+    inyRequest({ url: '/base/test', method: 'GET', params: { a: 1, b: 2, c: 3}, paramsSerializer: function (params) {
+        let str = '?a='
+        for (var key in params) {
+          str +=  '_' + params[key]
+        }
+        return str
+      }
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+    // 特殊字符
+    inyRequest({ url: '/base/test', method: 'GET', params: { a: '@+:$%=', b: 1, c: 2}}).then(res => {}).catch(err => {})
+  </script>
+</body>
+</html>
