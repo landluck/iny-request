@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>day 01</title>
+  <script src="../iny-request.js"></script>
+</head>
+<body>
+  <script>
+    inyRequest({
+      url: '/base/test',
+      method: 'GET',
+      params: { a: 1, b: 1, c: 2}
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+    inyRequest({
+      url: '/base/test',
+      method: 'GET',
+      params: { a: [1, 2, 3, 4]}
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+
+    inyRequest({
+      url: '/base/test',
+      method: 'GET',
+      params: new URLSearchParams('a=1&b=2&c=3')
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+
+    inyRequest({
+      url: '/base/test',
+      method: 'GET',
+      params: { a: 1, b: 2, c: 3},
+      paramsSerializer: function (params) {
+        let str = '?'
+        for (var key in params) {
+          str += 'key=' + params[key]
+        }
+        return str
+      }
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  </script>
+</body>
+</html>
